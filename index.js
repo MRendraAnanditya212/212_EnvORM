@@ -23,11 +23,15 @@ app.post("/komik", async (req, res) => {
     const data = req.body;
     try {
         const komik = await db.Komik.create(data);
-        res.send(komik);
+        res.status(201).json(komik);
     } catch (err) {
-        res.send(err);
+        console.error("Error create komik:", err); 
+        res.status(500).json({
+            message: "Gagal menambahkan data komik",
+            error: err.message || err
+        });
     }
-})
+});
 
 app.get("/komik", async (req, res) => {
     try {
